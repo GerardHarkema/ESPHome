@@ -1,0 +1,554 @@
+esphome:
+  name: "esp32-cam-scd41"
+  friendly_name: "ESP32 Cam/SCD41"
+  name_add_mac_suffix: true
+  on_boot:
+    - priority: 600.0
+      then:
+        - lambda: |-
+            // Default: Connecting
+            id(wifi_led_pwm).set_level(0.5);
+            id(wifi_led_pwm).set_period(1000);
+            id(wifi_led_pwm).turn_on();
+        - script.execute: fast_reboot_factory_reset
+  on_loop:
+    then:
+      - lambda: |-
+          // Captive portal
+          if(id(wifi_component).has_ap() && !id(wifi_component).has_sta()) {
+            id(wifi_led_pwm).set_level(0.5);
+            id(wifi_led_pwm).set_period(200);
+          } else {
+            id(wifi_led_pwm).set_period(1000);
+            // Connected
+            if(id(wifi_component).is_connected()) {
+              id(wifi_led_pwm).set_level(1);
+              if (id(esp32cam_update)) {
+                id(esp32cam).update_camera_parameters();
+                id(esp32cam_update) = false;
+              }
+            // Connecting
+            } else
+              id(wifi_led_pwm).set_level(0.5);
+          }
+
+esp32:
+  board: esp32cam
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/fornellas/esphome
+      ref: fix_esp32_camera_update
+    components: [ esp32_camera ]
+    refresh: 0s
+
+globals:
+  - id: fast_reboot
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
+  - id: factory_reset_reboot_counter
+    type: int
+    initial_value: '5'
+
+  - id: esp32cam_update
+    type: bool
+    initial_value: 'false'
+
+logger:
+  #baud_rate: 0
+  level: VERBOSE
+  deassert_rts_dtr: true
+
+script:
+  - id: fast_reboot_factory_reset
+    then:
+      - if:
+          condition:
+            lambda: return ( id(fast_reboot) >= id(factory_reset_reboot_counter) );
+          then:
+            - lambda: |-
+                ESP_LOGI("Fast Boot Factory Reset", "Performing factory reset");
+                id(fast_reboot) = 0;
+                fast_reboot->loop();
+                global_preferences->sync();
+            - button.press: factory_reset_button
+      - lambda: |-
+          if(id(fast_reboot) > 0)
+            ESP_LOGI("Fast Boot Factory Reset", "Quick reboot %d/%d, do it %d more times to factory reset", id(fast_reboot), id(factory_reset_reboot_counter), id(factory_reset_reboot_counter) - id(fast_reboot));
+          id(fast_reboot) += 1;
+          fast_reboot->loop();
+          global_preferences->sync();
+      - delay: 10s
+      - lambda: |-
+          id(fast_reboot) = 0;
+          fast_reboot->loop();
+          global_preferences->sync();
+
+wifi:
+  id: wifi_component
+  ap:
+    ap_timeout: 0s
+  reboot_timeout: 0s
+  power_save_mode: none
+
+captive_portal:
+
+
+api:
+  reboot_timeout: 0s
+  encryption:
+    key: "ot0GCJEivRLn/DYJjWt366faIU7QPPHamoWVRPYKqPQ="
+
+ota:
+  - platform: esphome
+    password: "ddb7e1a02b13162fa301cb1589115c2f"
+
+esp32_camera:
+  external_clock:
+    pin:
+      number: GPIO0
+      ignore_strapping_warning: true
+    frequency: 8MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  pixel_clock_pin: GPIO22
+  power_down_pin: GPIO32
+  name: "Camera"
+  id: esp32cam
+  max_framerate: "60 fps"
+  # resolution: 160x120 # (QQVGA)
+  # resolution: 176x144 # (QCIF)
+  # resolution: 240x176 # (HQVGA)
+  # resolution: 320x240 # (QVGA)
+  # resolution: 400x296 # (CIF) Sub-sampled
+  # resolution: 640x480 # (VGA)
+  resolution: 800x600 # (SVGA) Sub-sampled
+  # resolution: 1024x768 # (XGA)
+  # resolution: 1280x1024 # (SXGA)
+  # resolution: 1600x1200 # (UXGA) Native
+  on_stream_start:
+    then:
+      - if:
+          condition:
+            lambda: return id(flash_automatic).state;
+          then:
+            - switch.turn_on: flash
+  on_stream_stop:
+    then:
+      - if:
+          condition:
+            lambda: return id(flash_automatic).state;
+          then:
+            - switch.turn_off: flash
+
+#esp32_camera_web_server:
+#  - port: 8080
+#    mode: stream
+#  - port: 8081
+#    mode: snapshot
+
+binary_sensor:
+  - platform: status
+    name: "Status"
+
+i2c:
+  #scl: GPIO22
+  #sda: GPIO21
+  scl: GPIO1
+  sda: GPIO3
+  scan: true
+  id: bus_a
+
+sensor:
+  - platform: uptime
+    name: 'Uptime'
+    update_interval: 15s
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 15s
+
+  - platform: scd4x
+    update_interval: 5s
+    co2:
+      name: "CO2"
+    temperature:
+      name: "Temperature"
+    humidity:
+      name: "Humidity"
+
+output:
+  - platform: slow_pwm
+    id: wifi_led_pwm
+    period: 1s
+    pin: GPIO33
+    inverted: true
+
+button:
+  - platform: factory_reset
+    id: factory_reset_button
+    name: "Factory reset"
+
+  - platform: restart
+    name: "Restart"
+
+  - platform: safe_mode
+    name: "Safe Mode"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "Wifi Info: IP Address"
+    ssid:
+      name: "Wifi Info: SSID"
+    bssid:
+      name: "Wifi Info: BSSID"
+    mac_address:
+      name: "Wifi Info: MAC Address"
+    dns_address:
+      name: "Wifi Info: DNS Address"
+
+switch:
+  - platform: template
+    name: "Vertical flip"
+    icon: mdi:swap-vertical
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: true
+    turn_on_action:
+      - lambda: |-
+          id(esp32cam).set_vertical_flip(true);
+          id(esp32cam_update) = true;
+    turn_off_action:
+      - lambda: |-
+          id(esp32cam).set_vertical_flip(false);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Horizontal mirror"
+    icon: mdi:reflect-horizontal
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: true
+    turn_on_action:
+      - lambda: |-
+          id(esp32cam).set_horizontal_mirror(true);
+          id(esp32cam_update) = true;
+    turn_off_action:
+      - lambda: |-
+          id(esp32cam).set_horizontal_mirror(false);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto exposure compensation 2"
+    icon: mdi:auto-fix
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: true
+    turn_on_action:
+      - lambda: |-
+          id(esp32cam).set_aec2(true);
+          id(esp32cam_update) = true;
+    turn_off_action:
+      - lambda: |-
+          id(esp32cam).set_aec2(false);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Flash automatic on stream"
+    id: flash_automatic
+    icon: mdi:flash
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: true
+
+  - platform: gpio
+    name: "Flash"
+    icon: mdi:flash
+    id: flash
+    pin: GPIO4
+
+select:
+  # FIXME when reset after boot, yields panic some time after
+  # - platform: template
+  #   name: "Resolution"
+  #   icon: mdi:video-standard-definition
+  #   entity_category: config
+  #   optimistic: true
+  #   options:
+  #     - "160x120 (QQVGA)"
+  #     - "176x144 (QCIF)"
+  #     - "240x176 (HQVGA)"
+  #     - "320x240 (QVGA)"
+  #     - "400x296 (CIF)"
+  #     - "640x480 (VGA)"
+  #     - "800x600 (SVGA)"
+  #     - "1024x768 (XGA)"
+  #     - "1280x1024 (SXGA)"
+  #     - "1600x1200 (UXGA)"
+  #   initial_option: "640x480 (VGA)"
+  #   restore_value: true
+  #   on_value:
+  #     then:
+  #     - lambda: |-
+  #         if ("160x120 (QQVGA)" == x )
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_160X120);
+  #         else if ("176x144 (QCIF)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_176X144);
+  #         else if ("240x176 (HQVGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_240X176);
+  #         else if ("320x240 (QVGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_320X240);
+  #         else if ("400x296 (CIF)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_400X296);
+  #         else if ("640x480 (VGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_640X480);
+  #         else if ("800x600 (SVGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_800X600);
+  #         else if ("1024x768 (XGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_1024X768);
+  #         else if ("1280x1024 (SXGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_1280X1024);
+  #         else if ("1600x1200 (UXGA)" == x)
+  #           id(esp32cam).set_jpeg_quality(esphome::esp32_camera::ESP32_CAMERA_SIZE_1600X1200);
+  #         id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Special effect"
+    icon: mdi:filter
+    entity_category: config
+    optimistic: true
+    options:
+      - "none"
+      - "negative"
+      - "grayscale"
+      - "red_tint"
+      - "green_tint"
+      - "blue_tint"
+      - "sepia"
+    initial_option: "none"
+    restore_value: true
+    on_value:
+      then:
+      - lambda: |-
+          if ("none" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_NONE);
+          else if ("negative" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_NEGATIVE);
+          else if ("grayscale" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_GRAYSCALE);
+          else if ("red_tint" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_RED_TINT);
+          else if ("green_tint" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_GREEN_TINT);
+          else if ("blue_tint" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_BLUE_TINT);
+          else if ("sepia" == x)
+            id(esp32cam).set_special_effect(esphome::esp32_camera::ESP32_SPECIAL_EFFECT_SEPIA);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto exposure compensation"
+    icon: mdi:auto-fix
+    entity_category: config
+    optimistic: true
+    options:
+      - "manual"
+      - "auto"
+    initial_option: "auto"
+    restore_value: true
+    on_value:
+      then:
+      - lambda: |-
+          if ("manual" == x)
+            id(esp32cam).set_aec_mode(esphome::esp32_camera::ESP32_GC_MODE_MANU);
+          else if ("auto" == x)
+            id(esp32cam).set_aec_mode(esphome::esp32_camera::ESP32_GC_MODE_AUTO);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto gain control"
+    icon: mdi:auto-fix
+    entity_category: config
+    optimistic: true
+    options:
+      - "manual"
+      - "auto"
+    initial_option: "auto"
+    restore_value: true
+    on_value:
+      then:
+      - lambda: |-
+          if ("manual" == x)
+            id(esp32cam).set_agc_mode(esphome::esp32_camera::ESP32_GC_MODE_MANU);
+          else if ("auto" == x)
+            id(esp32cam).set_agc_mode(esphome::esp32_camera::ESP32_GC_MODE_AUTO);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto gain control ceiling"
+    icon: mdi:auto-fix
+    entity_category: config
+    optimistic: true
+    options:
+      - "2x"
+      - "4x"
+      - "8x"
+      - "16x"
+      - "32x"
+      - "64x"
+      - "128x"
+    initial_option: "2x"
+    restore_value: true
+    on_value:
+      then:
+      - lambda: |-
+          if ("2x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_2X);
+          else if ("4x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_4X);
+          else if ("8x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_8X);
+          else if ("16x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_16X);
+          else if ("32x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_32X);
+          else if ("64x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_64X);
+          else if ("128x" == x)
+            id(esp32cam).set_agc_gain_ceiling(esphome::esp32_camera::ESP32_GAINCEILING_128X);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "White balance mode"
+    icon: mdi:white-balance-auto
+    entity_category: config
+    optimistic: true
+    options:
+      - "auto"
+      - "sunny"
+      - "cloudy"
+      - "office"
+      - "home"
+    initial_option: "auto"
+    restore_value: true
+    on_value:
+      then:
+      - lambda: |-
+          if ("auto" == x)
+            id(esp32cam).set_wb_mode(esphome::esp32_camera::ESP32_WB_MODE_AUTO);
+          else if ("sunny" == x)
+            id(esp32cam).set_wb_mode(esphome::esp32_camera::ESP32_WB_MODE_SUNNY);
+          else if ("cloudy" == x)
+            id(esp32cam).set_wb_mode(esphome::esp32_camera::ESP32_WB_MODE_CLOUDY);
+          else if ("office" == x)
+            id(esp32cam).set_wb_mode(esphome::esp32_camera::ESP32_WB_MODE_OFFICE);
+          else if ("home" == x)
+            id(esp32cam).set_wb_mode(esphome::esp32_camera::ESP32_WB_MODE_HOME);
+          id(esp32cam_update) = true;
+
+number:
+  - platform: template
+    name: "JPEG Quality"
+    icon: mdi:file-jpg-box
+    entity_category: config
+    mode: slider
+    initial_value: 10
+    min_value: 10
+    max_value: 63
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_jpeg_quality(x);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Contrast"
+    icon: mdi:contrast-box
+    entity_category: config
+    mode: slider
+    initial_value: 0
+    min_value: -2
+    max_value: 2
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_contrast(x);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Brightness"
+    icon: mdi:brightness-6
+    entity_category: config
+    mode: slider
+    initial_value: 0
+    min_value: -2
+    max_value: 2
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_brightness(x);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Saturation"
+    icon: mdi:palette-outline
+    entity_category: config
+    mode: slider
+    initial_value: 0
+    min_value: -2
+    max_value: 2
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_saturation(x);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto exposure level"
+    icon: mdi:auto-fix
+    entity_category: config
+    mode: slider
+    initial_value: 0
+    min_value: -2
+    max_value: 2
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_ae_level(x);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto exposure compensation value"
+    icon: mdi:auto-fix
+    entity_category: config
+    mode: slider
+    initial_value: 300
+    min_value: 0
+    max_value: 1200
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_aec_value(x);
+          id(esp32cam_update) = true;
+
+  - platform: template
+    name: "Auto gain control value"
+    icon: mdi:auto-fix
+    entity_category: config
+    mode: slider
+    initial_value: 0
+    min_value: 0
+    max_value: 30
+    step: 1
+    set_action:
+      - lambda: |-
+          id(esp32cam).set_aec_value(x);
+          id(esp32cam_update) = true;

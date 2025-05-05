@@ -1,0 +1,85 @@
+esphome:
+  name: lux-sensor
+  friendly_name: Lux-sensor
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "iBwYHiDaeweT+8L8p7W3SFUBbyyjqV0qg2AhHdvy+7Q="
+
+ota:
+  - platform: esphome
+    password: "830e12863086b674283fbbf3b11b3706"
+
+wifi:
+  ssid: "BirdsBoven"
+  password: "Highway12!"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "EspHome Hotspot"
+    password: "1234567890"
+
+captive_portal:
+    
+
+binary_sensor:
+  - platform: status
+    name: "Lux-sensor Status"
+
+i2c:
+  sda: 8
+  scl: 9
+  scan: False
+
+sensor:
+  - platform: wifi_signal
+    name: "Lux-sensor Level WiFi Signal"
+    id: os_ll
+    update_interval: 15s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 15
+          send_every: 15
+          send_first_at: 1
+  - platform: uptime
+    name: 'Uptime'
+    update_interval: 15s
+    
+  - platform: bh1750
+    name: "Lux-sensor Light Level"
+    address: 0x23
+    update_interval: 1s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 10
+          send_every: 10
+          send_first_at: 1
+      - or:
+          - throttle: 60s
+          - delta: 5
+
+switch:
+  - platform: restart
+    name: "Lux-sensor Restart"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "Wifi Info: IP Address"
+    ssid:
+      name: "Wifi Info: SSID"
+    bssid:
+      name: "Wifi Info: BSSID"
+    mac_address:
+      name: "Wifi Info: MAC Address"
+    dns_address:
+      name: "Wifi Info: DNS Address"

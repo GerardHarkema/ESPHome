@@ -1,0 +1,128 @@
+esphome:
+  name: scd41
+  friendly_name: SCD41
+#  platformio_options:
+#    board_build.arduino.memory_type: qio_opi
+#    board_build.arduino.cdc_on_boot: 1
+#  platformio_options:
+#    build_flags: 
+#      - -DCONFIG_ARDUINO_LOOP_STACK_SIZE=32768
+
+
+
+
+esp32:
+  board: esp32-s3-devkitc-1
+  #board: upesy_wroom
+  variant: esp32s3 
+  framework:
+    type: arduino
+    #esp-idf
+    #arduino
+
+
+
+logger:
+  #baud_rate: 1200
+  level: VERBOSE
+  #deassert_rts_dtr: true
+
+
+#wifi:
+#  id: wifi_component
+#  ap:
+#    ap_timeout: 0s
+#  reboot_timeout: 0s
+#  power_save_mode: none
+
+wifi:
+  id: wifi_component
+  ap:
+    ap_timeout: 0s
+  reboot_timeout: 0s
+  power_save_mode: none
+  ssid: "Birds"
+  password: "Highway12!"
+
+captive_portal:
+
+
+api:
+  reboot_timeout: 0s
+  encryption:
+    key: "ot0GCJEivRLn/DYJjWt366faIU7QPPHamoWVRPYKqPQ="
+
+ota:
+  - platform: esphome
+    password: "ddb7e1a02b13162fa301cb1589115c2f"
+
+
+binary_sensor:
+  - platform: status
+    name: "Status"
+
+# configuration entry for ESP32
+#i2c:
+  #scl: GPIO22
+  #sda: GPIO21
+#  scl: GPIO2
+#  sda: GPIO1
+#  scan: true
+#  id: bus_a
+
+
+#sensor:
+#  - platform: uptime
+#    name: 'Uptime'
+#    update_interval: 15s
+
+#  - platform: wifi_signal
+#    name: "WiFi Signal"
+#    update_interval: 15s
+
+#  - platform: scd4x
+#    update_interval: 5s
+#    co2:
+#      name: "CO2"
+#    temperature:
+#      name: "Temperature"
+#    humidity:
+#      name: "Humidity"
+
+
+#output:
+#  - platform: slow_pwm
+#    id: wifi_led_pwm
+#    period: 1s
+#    pin: GPIO21
+    #GPIO33
+#    inverted: true
+
+#button:
+#  - platform: factory_reset
+#    id: factory_reset_button
+#    name: "Factory reset"
+
+#  - platform: restart
+#    name: "Restart"
+
+#  - platform: safe_mode
+#    name: "Safe Mode"
+
+#text_sensor:
+#  - platform: wifi_info
+#    ip_address:
+#      name: "Wifi Info: IP Address"
+#    ssid:
+#      name: "Wifi Info: SSID"
+#    bssid:
+#      name: "Wifi Info: BSSID"
+#    mac_address:
+#      name: "Wifi Info: MAC Address"
+#    dns_address:
+#      name: "Wifi Info: DNS Address"
+
+
+#select:
+
+

@@ -1,0 +1,44 @@
+esphome:
+  name: echos3r-satellite
+  friendly_name: EchoS3R-Satellite
+  platformio_options:
+    upload_port: COM3
+    monitor_port: COM3
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "OEhvIOaE/QQTCvljlx/2LQJtBzSzQYBiKAYNLTqdx3A="
+
+ota:
+  - platform: esphome
+    password: "ca8dff12bf1605e1c5b6ec675073fc8a"
+
+
+wifi:
+  ssid: "BirdsBoven"
+  password: "Highway12!"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Echos3R-Satellite"
+    password: "0123456789"
+
+captive_portal:
+
+
+# Add the external package here
+packages:
+  remote_package_files:
+    url: https://github.com/m5stack/esphome-yaml
+    files: [ common/atom-echos3r-satellite-base.yaml ]
+    ref: main  
+    refresh: 0s

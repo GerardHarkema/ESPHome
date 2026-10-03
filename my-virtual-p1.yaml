@@ -1,0 +1,74 @@
+esphome:
+  name: virtuele-p1-meter
+  friendly_name: Virtuele P1 Meter
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+captive_portal:
+
+wifi:
+  ssid: "BirdsBoven"
+  password: "Highway12!"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "EspHome Hotspot"
+    password: "1234567890"
+
+mdns:
+  services:
+    - service: "hwenergy"
+      protocol: "tcp"
+      port: 80
+      txt:
+        api_enabled: "1"
+        path: "/api"
+        product_name: "P1 Meter"
+        product_type: "HWE-P1"
+
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "QYcKMij4EQ/esj2rd3S25uC8BDosDVP2sxeRO91mFZo="
+
+http_request:
+
+web_server:
+  port: 80
+
+sensor:
+  - platform: template
+    id: template_power
+    name: "Actief vermogen"
+    unit_of_measurement: "W"
+    state_class: measurement
+    device_class: power
+    update_interval: 30s
+    lambda: |-
+      return 0.0;
+
+  - platform: homeassistant
+    id: ha_active_power
+    entity_id: sensor.jouw_huidige_vermogen_sensor_in_ha
+
+switch:
+  - platform: restart
+    name: "Virtuele P1 Meter Restart"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "Wifi Info: IP Address"
+    ssid:
+      name: "Wifi Info: SSID"
+    bssid:
+      name: "Wifi Info: BSSID"
+    mac_address:
+      name: "Wifi Info: MAC Address"
+    dns_address:
+      name: "Wifi Info: DNS Address"

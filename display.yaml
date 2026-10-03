@@ -1,0 +1,116 @@
+esphome:
+  name: wrover-display
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: esp-idf
+
+# Schakel PSRAM in (nodig voor display buffers)
+psram:
+
+# Wifi instellingen
+wifi:
+  ssid: "Birds"
+  password: "Highway12!"
+
+  # Optioneel: vast IP instellen voorkomt verbindingsvertragingen
+  # manual_ip:
+  #   static_ip: 192.168.1.50
+  #   gateway: 192.168.1.1
+  #   subnet: 255.255.255.0
+
+  # Maakt een fallback hotspot aan als de wifi niet bereikbaar is
+  ap:
+    ssid: "Wrover-Display-Fallback"
+    password: "0123456789"
+
+# Native Home Assistant API (voor directe sensor- en schermupdates)
+api:
+  encryption:
+    key: "AzSPcghg1FUBLe9tg4H6qdWxfFk4cuMhz3fpKgnh/r0=" # Genereert ESPHome meestal automatisch
+
+# Draadloze updates via het netwerk
+ota:
+  platform: esphome
+
+# Log viewer via wifi of USB
+logger:
+
+# SPI Bus voor het scherm op de ESP-WROVER-KIT v4.1
+spi:
+  clk_pin: GPIO19
+  mosi_pin: GPIO23
+  miso_pin: GPIO25
+
+# Achtergrondverlichting van het scherm (via GPIO5, actief laag op de WROVER-KIT)
+output:
+  - platform: gpio
+    pin: GPIO5
+    id: backlight_output
+    inverted: true
+
+light:
+  - platform: binary
+    output: backlight_output
+    id: backlight
+    internal: true
+    restore_mode: ALWAYS_ON
+
+# Schermconfiguratie (ESP-WROVER-KIT heeft standaard een ILI9341, geen ST7789V)
+display:
+  - platform: ili9xxx
+    model: ILI9341
+    cs_pin: GPIO22
+    dc_pin: GPIO21
+    reset_pin: GPIO18
+    invert_colors: false
+    rotation: 90
+    lambda: |-
+      // Statusscherm als test
+      it.rectangle(5, 5, 310, 220, Color(0xFFFF));
+      it.print(10, 10, id(font_main), "Gerards Home Assistant");
+      it.printf(10, 40, id(font_main), "WoonkamerTemp: %.1f °C", id(woonkamer_temp).state);
+      it.printf(10, 70, id(font_main), "Power: %.1f W", id(marstek_total_power).state);
+      it.printf(10, 100, id(font_main), "Solar: %.1f W", id(omnik_solar_current_power).state);
+      it.printf(10, 130, id(font_main), "Solar today: %.1f kWh", id(omnik_solar_energy_today).state);
+      it.printf(10, 160, id(font_main), "Net in: %.2f kWh, Net out: %.2f kWh", id(net_import_energy).state, id(net_export_energy).state);
+      it.printf(10, 190, id(font_main), "SoC: %.1f %%", id(marstek_state_of_charge).state);
+
+# Lettertype (via Google Fonts, geen lokaal bestand nodig)
+font:
+  - file: "gfonts://Roboto"
+    id: font_main
+    size: 18
+    glyphs: "!\"%()+,-_.:°0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+# Sensorgegevens ophalen via wifi uit Home Assistant
+sensor:
+  - platform: homeassistant
+    id: woonkamer_temp
+    entity_id: sensor.lyric_thermostaat_thermostat_binnentemperatuur
+
+  - platform: homeassistant
+    id: marstek_total_power
+    entity_id: sensor.marstek_venuse_3_0_ct_total_power
+
+  - platform: homeassistant
+    id: marstek_state_of_charge
+    entity_id: sensor.marstek_venuse_3_0_state_of_charge
+
+  - platform: homeassistant
+    id: omnik_solar_current_power
+    entity_id: sensor.omnik_solar_current_power
+
+  - platform: homeassistant
+    id: omnik_solar_energy_today
+    entity_id: sensor.omnik_solar_energy_today
+
+  - platform: homeassistant
+    id: net_import_energy
+    entity_id: sensor.net_import_energy
+
+  - platform: homeassistant
+    id: net_export_energy
+    entity_id: sensor.net_export_energy
+

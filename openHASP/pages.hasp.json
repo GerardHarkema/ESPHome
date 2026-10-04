@@ -512,7 +512,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float }}kWh"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_a_power",
             "stateTemplate": "auto"
@@ -526,7 +526,7 @@
           "w": 130,
           "h": 130,
           "min": 0,
-          "max": 6000,
+          "max": 3000,
           "val": 2500,
           "start_angle": 135,
           "end_angle": 45,
@@ -542,7 +542,7 @@
               "line_color10": "{{ 'blue' if states('sensor.marstek_venuse_3_0_ct_phase_b_power') | float(0) >= 0 else 'red' }}"
             }
           },
-          "mode": "symmetrical",
+          "mode": "normal",
           "adjustable": false
         },
         {
@@ -574,7 +574,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float }}kWh"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_b_power",
             "stateTemplate": "auto"
@@ -588,7 +588,7 @@
           "w": 130,
           "h": 130,
           "min": 0,
-          "max": 100,
+          "max": 3000,
           "val": 0,
           "start_angle": 135,
           "end_angle": 45,
@@ -638,7 +638,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float }}kWh"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
             "stateTemplate": "auto"
@@ -669,7 +669,7 @@
               "line_color10": "{{ 'blue' if states('sensor.marstek_venuse_3_0_ct_total_power') | float(0) >= 0 else 'red' }}"
             }
           },
-          "mode": "symmetrical"
+          "mode": "normal"
         },
         {
           "id": 11,
@@ -700,7 +700,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float }}kWh"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
             "stateTemplate": "auto"

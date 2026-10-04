@@ -44,7 +44,7 @@
 {"id":5,"obj":"label","x":200,"y":80,"w":80,"h":120,"text":"\uF2A3","align":"center","text_color":"#67dc18","text_font":100}
 {"obj":"arc","x":40,"y":80,"w":150,"h":150,"min":0,"max":100,"val":50,"start_angle":180,"end_angle":0,"line_width":20,"line_width10":20,"line_color":"#3a3a3a","line_color10":"#2196F3","id":8}
 {"id":2,"obj":"label","x":0,"y":70,"w":150,"h":30,"text":"Label","align":"center","text_color":"#ffffff","text_font":25,"parentid":8}
-{"id":6,"obj":"label","x":0,"y":40,"w":150,"h":30,"text":"{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}\uE08E{% elif soc < 40 %}\uE07A{% elif soc < 60 %}\uE07C{% elif soc < 80 %}\uE07F{% elif soc < 95 %}\uE081{% else %}\uE079{% endif %}","align":"center","text_color":"#ffffff","text_font":20,"parentid":8}
+{"id":9,"obj":"label","x":0,"y":30,"w":150,"h":50,"text":"\uF2A3","align":"center","text_color":"#67dc18","text_font":40,"parentid":8}
 
 {"page":4,"comment":" Page 4 "}
 {"id":1,"obj":"arc","x":60,"y":200,"w":120,"h":120,"min":0,"max":0,"val":0,"adjustable":0,"line_color":"lime","line_color10":"orange","line_width":3,"line_width10":3,"bg_opa":180,"border_width":0,"start_angle10":270,"end_angle10":269,"value_str":"充","value_color":"white","value_font":36,"value_ofs_y":-15,"start_angle":0,"end_angle":360}

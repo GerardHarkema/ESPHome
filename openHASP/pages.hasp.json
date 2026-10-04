@@ -49,7 +49,7 @@
           "page": 0,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.lyric_thermostaat_thermostat_binnentemperatuur\") }}°"
+              "text": "{% set s = states(\"sensor.lyric_thermostaat_thermostat_binnentemperatuur\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}°"
             }
           }
         },
@@ -139,7 +139,7 @@
             "displayEntityId": "sensor.meterkast_inverter_solar_enery_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.meterkast_inverter_solar_enery_daily\") | float }}kWh"
+              "text": "{{ states(\"sensor.meterkast_inverter_solar_enery_daily\") | float(0) }}kWh"
             }
           }
         },
@@ -187,7 +187,7 @@
             "displayEntityId": "sensor.net_import_energy_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.net_import_energy_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.net_import_energy_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           }
         },
@@ -209,7 +209,7 @@
             "displayEntityId": "sensor.net_export_energy_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.net_export_energy_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.net_export_energy_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           }
         },
@@ -258,7 +258,7 @@
             "displayEntityId": "sensor.home_energy",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.home_energy\") }}kWh"
+              "text": "{% set s = states(\"sensor.home_energy\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           }
         },
@@ -306,7 +306,7 @@
             "displayEntityId": "sensor.marstek_grid_energy_import_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_grid_energy_import_daily\") }}Kwh"
+              "text": "{% set s = states(\"sensor.marstek_grid_energy_import_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}Kwh"
             }
           }
         },
@@ -328,7 +328,7 @@
             "displayEntityId": "sensor.marstek_grid_energy_export_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_grid_energy_export_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.marstek_grid_energy_export_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           }
         },
@@ -395,7 +395,7 @@
             "displayEntityId": "sensor.omnik_solar_current_power",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.omnik_solar_current_power\") | float }}W",
+              "text": "{{ states(\"sensor.omnik_solar_current_power\") | float(0) }}W",
               "text_color": "{{ 'blue' if states('sensor.omnik_solar_current_power') | float(0) >= 0 else 'red' }}"
             }
           },
@@ -415,7 +415,7 @@
           "page": 1,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float}}W",
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float(0) }}W",
               "text_color": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_total_power') | float(0) < 0 else 'blue' }}"
             }
           },
@@ -478,7 +478,7 @@
             "stateTemplate": "auto",
             "propertyTemplates": {
               "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'blue' if states('sensor.marstek_venuse_3_0_ct_phase_a_power') | float(0) >= 0 else 'red' }}"
+              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_phase_a_power') | float(0) >= 0 else 'blue' }}"
             }
           },
           "mode": "symmetrical"
@@ -512,7 +512,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float }}kW"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float(0) }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_a_power",
             "stateTemplate": "auto"
@@ -539,7 +539,7 @@
             "stateTemplate": "auto",
             "propertyTemplates": {
               "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'blue' if states('sensor.marstek_venuse_3_0_ct_phase_b_power') | float(0) >= 0 else 'red' }}"
+              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_phase_b_power') | float(0) >= 0 else 'blue' }}"
             }
           },
           "mode": "normal",
@@ -574,7 +574,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float }}kW"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float(0) }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_b_power",
             "stateTemplate": "auto"
@@ -598,12 +598,12 @@
           "line_color10": "#2196F3",
           "page": 2,
           "haBinding": {
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
-            "stateTemplate": "auto",
             "propertyTemplates": {
               "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'blue' if states('sensor.marstek_venuse_3_0_ct_phase_c_power') | float(0) >= 0 else 'red' }}"
-            }
+              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_phase_c_power') | float(0) >= 0 else 'blue' }}"
+            },
+            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
+            "stateTemplate": "auto"
           },
           "shadow_opa": 0,
           "adjustable": false,
@@ -638,7 +638,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float }}kW"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float(0) }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
             "stateTemplate": "auto"
@@ -666,7 +666,7 @@
             "stateTemplate": "auto",
             "propertyTemplates": {
               "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'blue' if states('sensor.marstek_venuse_3_0_ct_total_power') | float(0) >= 0 else 'red' }}"
+              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_total_power') | float(0) >= 0 else 'blue' }}"
             }
           },
           "mode": "normal"
@@ -700,7 +700,7 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float }}kW"
+              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float(0) }}kW"
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
             "stateTemplate": "auto"
@@ -725,7 +725,7 @@
           "page": 3,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_state_of_charge\") }}%"
+              "text": "{% set s = states(\"sensor.marstek_venuse_3_0_state_of_charge\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}%"
             }
           },
           "text_font": 25,
@@ -766,7 +766,7 @@
           "text_font": 25,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_grid_power\") }}W"
+              "text": "{% set s = states(\"sensor.marstek_venuse_3_0_grid_power\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}W"
             }
           }
         },
@@ -782,26 +782,6 @@
           "text_color": "#67dc18",
           "page": 3,
           "text_font": 100,
-          "haBinding": {
-            "propertyTemplates": {
-              "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}{% elif soc < 40 %}{% elif soc < 60 %}{% elif soc < 80 %}{% elif soc < 95 %}{% else %}{% endif %}",
-              "text_color": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}red{% elif soc < 40 %}orange{% elif soc < 60 %}yellow{% else %}#67dc18{% endif %}"
-            }
-          }
-        },
-        {
-          "id": 6,
-          "obj": "label",
-          "x": 0,
-          "y": 40,
-          "w": 150,
-          "h": 30,
-          "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}{% elif soc < 40 %}{% elif soc < 60 %}{% elif soc < 80 %}{% elif soc < 95 %}{% else %}{% endif %}",
-          "align": "center",
-          "text_color": "#ffffff",
-          "page": 3,
-          "text_font": 20,
-          "parentid": 8,
           "haBinding": {
             "propertyTemplates": {
               "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}{% elif soc < 40 %}{% elif soc < 60 %}{% elif soc < 80 %}{% elif soc < 95 %}{% else %}{% endif %}",
@@ -847,6 +827,26 @@
               "val": "{{ states(\"sensor.marstek_venuse_3_0_state_of_charge\") | float(0) | abs }}"
             }
           }
+        },
+        {
+          "id": 9,
+          "obj": "label",
+          "x": 0,
+          "y": 30,
+          "w": 150,
+          "h": 50,
+          "text": "",
+          "align": "center",
+          "text_color": "#67dc18",
+          "page": 3,
+          "text_font": 40,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}{% elif soc < 40 %}{% elif soc < 60 %}{% elif soc < 80 %}{% elif soc < 95 %}{% else %}{% endif %}",
+              "text_color": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}red{% elif soc < 40 %}orange{% elif soc < 60 %}yellow{% else %}#67dc18{% endif %}"
+            }
+          },
+          "parentid": 8
         }
       ],
       "comment": "Page 3"
@@ -899,7 +899,7 @@
             "displayEntityId": "sensor.meterkast_inverter_solar_enery_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.meterkast_inverter_solar_enery_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.meterkast_inverter_solar_enery_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           },
           "parentid": 1
@@ -968,7 +968,7 @@
             "displayEntityId": "sensor.net_export_energy_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.net_export_energy_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.net_export_energy_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           },
           "parentid": 3
@@ -1018,7 +1018,7 @@
             "displayEntityId": "sensor.home_energy",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.home_energy\") }}kWh"
+              "text": "{% set s = states(\"sensor.home_energy\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           },
           "parentid": 6
@@ -1067,7 +1067,7 @@
             "displayEntityId": "sensor.marstek_grid_energy_import_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_grid_energy_import_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.marstek_grid_energy_import_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           },
           "parentid": 8
@@ -1090,7 +1090,7 @@
             "displayEntityId": "sensor.marstek_grid_energy_export_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_grid_energy_export_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.marstek_grid_energy_export_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           },
           "parentid": 8
@@ -1141,7 +1141,7 @@
             "displayEntityId": "sensor.net_import_energy_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.net_import_energy_daily\") }}kWh"
+              "text": "{% set s = states(\"sensor.net_import_energy_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}kWh"
             }
           },
           "parentid": 3
@@ -1192,7 +1192,7 @@
             "displayEntityId": "sensor.meterkast_muino_water_meter_e5b230_water_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.meterkast_muino_water_meter_e5b230_water_daily\") }}l"
+              "text": "{% set s = states(\"sensor.meterkast_muino_water_meter_e5b230_water_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}l"
             }
           }
         },

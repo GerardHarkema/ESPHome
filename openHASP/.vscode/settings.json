@@ -1,3 +1,7 @@
+// This folder is synced (Synology Drive) between Windows and Linux machines, and VS Code
+// workspace settings can't auto-switch by OS. This file holds whichever OS's values are
+// currently active. On the other OS, copy settings.linux.json (or settings.windows.json)
+// over this file. See settings.windows.json / settings.linux.json for the per-OS values.
 {
-    "openhasp.editor.iconFont": "/home/gerard/ESPHome/openHASP/fonts/openhasp-icons.ttf"
+    "openhasp.editor.iconFont": "c:/Users/gerar/SynologyDrive/ESPHome/openHASP/fonts/openhasp-icons.ttf"
 }

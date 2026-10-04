@@ -784,7 +784,7 @@
           "text_font": 100,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}{% elif soc < 40 %}{% elif soc < 60 %}{% elif soc < 80 %}{% elif soc < 95 %}{% else %}{% endif %}",
+              "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 25 %}{% elif soc < 50 %}{% elif soc < 75 %}{% else %}{% endif %}",
               "text_color": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}red{% elif soc < 40 %}orange{% elif soc < 60 %}yellow{% else %}#67dc18{% endif %}"
             }
           }
@@ -842,7 +842,7 @@
           "text_font": 40,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}{% elif soc < 40 %}{% elif soc < 60 %}{% elif soc < 80 %}{% elif soc < 95 %}{% else %}{% endif %}",
+              "text": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 25 %}{% elif soc < 50 %}{% elif soc < 75 %}{% else %}{% endif %}",
               "text_color": "{% set soc = states('sensor.marstek_venuse_3_0_state_of_charge') | float(0) %}{% if soc < 20 %}red{% elif soc < 40 %}orange{% elif soc < 60 %}yellow{% else %}#67dc18{% endif %}"
             }
           },

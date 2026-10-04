@@ -48,8 +48,9 @@
           "text_color": "#ffffff",
           "page": 0,
           "haBinding": {
-            "displayEntityId": "sensor.lyric_thermostaat_thermostat_binnentemperatuur",
-            "stateTemplate": "auto"
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.lyric_thermostaat_thermostat_binnentemperatuur\") }}°"
+            }
           }
         },
         {
@@ -439,7 +440,9 @@
           "haBinding": {
             "displayEntityId": "sensor.omnik_solar_current_power",
             "stateTemplate": "auto"
-          }
+          },
+          "mode": "normal",
+          "adjustable": false
         }
       ],
       "comment": " Page 1 "
@@ -467,7 +470,8 @@
           "haBinding": {
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_a_power",
             "stateTemplate": "auto"
-          }
+          },
+          "mode": "symmetrical"
         },
         {
           "id": 2,
@@ -523,7 +527,8 @@
           "haBinding": {
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_b_power",
             "stateTemplate": "auto"
-          }
+          },
+          "mode": "symmetrical"
         },
         {
           "id": 5,
@@ -581,7 +586,9 @@
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
             "stateTemplate": "auto"
           },
-          "shadow_opa": 0
+          "shadow_opa": 0,
+          "adjustable": false,
+          "mode": "symmetrical"
         },
         {
           "id": 8,
@@ -638,7 +645,8 @@
           "haBinding": {
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
             "stateTemplate": "auto"
-          }
+          },
+          "mode": "symmetrical"
         },
         {
           "id": 11,
@@ -673,7 +681,7 @@
             },
             "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
             "stateTemplate": "auto"
-          }          
+          }
         }
       ],
       "comment": " Page 2 "
@@ -851,7 +859,10 @@
           "page": 1,
           "haBinding": {
             "displayEntityId": "sensor.meterkast_inverter_solar_enery_daily",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.meterkast_inverter_solar_enery_daily\") }}kWh"
+            }
           },
           "parentid": 1
         },
@@ -917,7 +928,10 @@
           "page": 1,
           "haBinding": {
             "displayEntityId": "sensor.net_export_energy_daily",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.net_export_energy_daily\") }}kWh"
+            }
           },
           "parentid": 3
         },
@@ -964,7 +978,10 @@
           "page": 1,
           "haBinding": {
             "displayEntityId": "sensor.home_energy",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.home_energy\") }}kWh"
+            }
           },
           "parentid": 6
         },
@@ -1010,7 +1027,10 @@
           "page": 1,
           "haBinding": {
             "displayEntityId": "sensor.marstek_grid_energy_import_daily",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.marstek_grid_energy_import_daily\") }}kWh"
+            }
           },
           "parentid": 8
         },
@@ -1030,7 +1050,10 @@
           "page": 1,
           "haBinding": {
             "displayEntityId": "sensor.marstek_grid_energy_export_daily",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.marstek_grid_energy_export_daily\") }}kWh"
+            }
           },
           "parentid": 8
         },
@@ -1078,7 +1101,10 @@
           "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.net_import_energy_daily",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.net_import_energy_daily\") }}kWh"
+            }
           },
           "parentid": 3
         },
@@ -1126,7 +1152,10 @@
           "parentid": 16,
           "haBinding": {
             "displayEntityId": "sensor.meterkast_muino_water_meter_e5b230_water_daily",
-            "stateTemplate": "auto"
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{{ states(\"sensor.meterkast_muino_water_meter_e5b230_water_daily\") }}l"
+            }
           }
         }
       ],

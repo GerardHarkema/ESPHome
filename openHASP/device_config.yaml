@@ -23,27 +23,27 @@ objects:
   #####################################
   - obj: "p1b10"  # label
     properties:
-      "text": '{{ states("sensor.meterkast_inverter_solar_enery_daily") | float(0) }}kWh'
+      "text": '{{ states("sensor.meterkast_inverter_solar_enery_daily") | float(0) | round(1) }}kWh'
 
   - obj: "p1b11"  # label
     properties:
-      "text": '{% set s = states("sensor.net_import_energy_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.net_import_energy_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p1b12"  # label
     properties:
-      "text": '{% set s = states("sensor.net_export_energy_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.net_export_energy_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p1b13"  # label
     properties:
-      "text": '{% set s = states("sensor.home_energy") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.home_energy") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p1b14"  # label
     properties:
-      "text": '{% set s = states("sensor.marstek_grid_energy_import_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}Kwh'
+      "text": '{% set s = states("sensor.marstek_grid_energy_import_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p1b15"  # label
     properties:
-      "text": '{% set s = states("sensor.marstek_grid_energy_export_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.marstek_grid_energy_export_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p1b49"  # gauge
     properties:
@@ -51,12 +51,12 @@ objects:
 
   - obj: "p1b52"  # label
     properties:
-      "text": '{{ states("sensor.omnik_solar_current_power") | float(0) }}W'
+      "text": '{{ states("sensor.omnik_solar_current_power") | float(0) | round(0) | int }}W'
       "text_color": '{{ ''blue'' if states(''sensor.omnik_solar_current_power'') | float(0) >= 0 else ''red'' }}'
 
   - obj: "p1b53"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) }}W'
+      "text": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) | round(0) | int }}W'
       "text_color": '{{ ''red'' if states(''sensor.marstek_venuse_3_0_ct_total_power'') | float(0) < 0 else ''blue'' }}'
 
   - obj: "p1b54"  # arc
@@ -74,7 +74,7 @@ objects:
 
   - obj: "p2b3"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_a_power") | float(0) }}kW'
+      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_a_power") | float(0) | round(0) | int }}W'
 
   - obj: "p2b4"  # arc
     properties:
@@ -83,7 +83,7 @@ objects:
 
   - obj: "p2b6"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_b_power") | float(0) }}kW'
+      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_b_power") | float(0) | round(0) | int }}W'
 
   - obj: "p2b7"  # arc
     properties:
@@ -92,7 +92,7 @@ objects:
 
   - obj: "p2b9"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_c_power") | float(0) }}kW'
+      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_c_power") | float(0) | round(0) | int }}W'
 
   - obj: "p2b10"  # arc
     properties:
@@ -101,7 +101,7 @@ objects:
 
   - obj: "p2b12"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) }}kW'
+      "text": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) | round(0) | int }}W'
 
   #####################################
   # Page 3 — Page 3
@@ -116,7 +116,7 @@ objects:
 
   - obj: "p3b4"  # label
     properties:
-      "text": '{% set s = states("sensor.marstek_venuse_3_0_grid_power") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}W'
+      "text": '{% set s = states("sensor.marstek_venuse_3_0_grid_power") %}{{ (s | float(0) | round(0) | int) if s not in [''unavailable'',''unknown''] else ''--'' }}W'
 
   - obj: "p3b5"  # label
     properties:
@@ -137,7 +137,7 @@ objects:
   #####################################
   - obj: "p4b2"  # label
     properties:
-      "text": '{% set s = states("sensor.meterkast_inverter_solar_enery_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.meterkast_inverter_solar_enery_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p4b4"  # label
     properties:
@@ -145,23 +145,23 @@ objects:
 
   - obj: "p4b5"  # label
     properties:
-      "text": '{% set s = states("sensor.net_export_energy_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.net_export_energy_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p4b7"  # label
     properties:
-      "text": '{% set s = states("sensor.home_energy") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.home_energy") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p4b9"  # label
     properties:
-      "text": '{% set s = states("sensor.marstek_grid_energy_import_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.marstek_grid_energy_import_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p4b10"  # label
     properties:
-      "text": '{% set s = states("sensor.marstek_grid_energy_export_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.marstek_grid_energy_export_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p4b15"  # label
     properties:
-      "text": '{% set s = states("sensor.net_import_energy_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
+      "text": '{% set s = states("sensor.net_import_energy_daily") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}kWh'
 
   - obj: "p4b17"  # label
     properties:

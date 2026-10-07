@@ -184,7 +184,7 @@
           "text_font": 18,
           "page": 1,
           "haBinding": {
-            "displayEntityId": "sensor.net_import_energy_daily",
+            "displayEntityId": "sensor.p1_meter_p1_energie_import_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
               "text": "{% set s = states(\"sensor.net_import_energy_daily\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}kWh"
@@ -206,7 +206,7 @@
           "text_font": 14,
           "page": 1,
           "haBinding": {
-            "displayEntityId": "sensor.net_export_energy_daily",
+            "displayEntityId": "sensor.p1_meter_p1_energie_export_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
               "text": "{% set s = states(\"sensor.net_export_energy_daily\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}kWh"
@@ -347,7 +347,7 @@
           "line_count": 21,
           "page": 1,
           "haBinding": {
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
+            "displayEntityId": "sensor.p1_meter_vermogen",
             "stateTemplate": "auto"
           },
           "text_font": 14
@@ -415,8 +415,8 @@
           "page": 1,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float(0) | round(0) | int }}W",
-              "text_color": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_total_power') | float(0) < 0 else 'blue' }}"
+              "text": "{{ states(\"sensor.p1_meter_vermogen\") | float(0) | round(0) | int }}W",
+              "text_color": "{{ 'red' if states('sensor.p1_meter_vermogen') | float(0) < 0 else 'blue' }}"
             }
           },
           "parentid": 49,
@@ -464,7 +464,7 @@
           "w": 130,
           "h": 130,
           "min": 0,
-          "max": 3000,
+          "max": 2000,
           "val": 0,
           "start_angle": 135,
           "end_angle": 45,
@@ -474,14 +474,14 @@
           "line_color10": "#2196F3",
           "page": 2,
           "haBinding": {
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_a_power",
-            "stateTemplate": "auto",
             "propertyTemplates": {
-              "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_phase_a_power') | float(0) >= 0 else 'blue' }}"
-            }
+              "val": "{{ states(\"sensor.p1_meter_vermogen_fase_1\") | float(0) | abs }}",
+              "line_color10": "{{ 'red' if states('sensor.p1_meter_vermogen_fase_1') | float(0) >= 0 else 'blue' }}"
+            },
+            "displayEntityId": "sensor.p1_meter_vermogen_fase_1",
+            "stateTemplate": "auto"
           },
-          "mode": "symmetrical"
+          "mode": "normal"
         },
         {
           "id": 2,
@@ -512,9 +512,9 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_a_power\") | float(0) | round(0) | int }}W"
+              "text": "{{ states(\"sensor.p1_meter_vermogen_fase_1\") | float(0) | round(0) | int }}W"
             },
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_a_power",
+            "displayEntityId": "sensor.p1_meter_vermogen_fase_1",
             "stateTemplate": "auto"
           }
         },
@@ -526,7 +526,7 @@
           "w": 130,
           "h": 130,
           "min": 0,
-          "max": 3000,
+          "max": 2000,
           "val": 2500,
           "start_angle": 135,
           "end_angle": 45,
@@ -535,11 +535,11 @@
           "line_color": "#0400ff",
           "page": 2,
           "haBinding": {
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_b_power",
+            "displayEntityId": "sensor.p1_meter_vermogen_fase_2",
             "stateTemplate": "auto",
             "propertyTemplates": {
-              "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_phase_b_power') | float(0) >= 0 else 'blue' }}"
+              "val": "{{ states(\"sensor.p1_meter_vermogen_fase_2\") | float(0) | abs }}",
+              "line_color10": "{{ 'red' if states('sensor.p1_meter_vermogen_fase_2') | float(0) >= 0 else 'blue' }}"
             }
           },
           "mode": "normal",
@@ -574,9 +574,9 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_b_power\") | float(0) | round(0) | int }}W"
+              "text": "{{ states(\"sensor.p1_meter_vermogen_fase_2\") | float(0) | round(0) | int }}W"
             },
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_b_power",
+            "displayEntityId": "sensor.p1_meter_vermogen_fase_2",
             "stateTemplate": "auto"
           }
         },
@@ -588,7 +588,7 @@
           "w": 130,
           "h": 130,
           "min": 0,
-          "max": 3000,
+          "max": 2000,
           "val": 0,
           "start_angle": 135,
           "end_angle": 45,
@@ -599,15 +599,15 @@
           "page": 2,
           "haBinding": {
             "propertyTemplates": {
-              "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_phase_c_power') | float(0) >= 0 else 'blue' }}"
+              "val": "{{ states(\"sensor.p1_meter_vermogen_fase_3\") | float(0) | abs }}",
+              "line_color10": "{{ 'red' if states('sensor.p1_meter_vermogen_fase_3') | float(0) >= 0 else 'blue' }}"
             },
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
+            "displayEntityId": "sensor.p1_meter_vermogen_fase_3",
             "stateTemplate": "auto"
           },
           "shadow_opa": 0,
           "adjustable": false,
-          "mode": "symmetrical"
+          "mode": "normal"
         },
         {
           "id": 8,
@@ -638,9 +638,9 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_phase_c_power\") | float(0) | round(0) | int }}W"
+              "text": "{{ states(\"sensor.p1_meter_vermogen_fase_3\") | float(0) | round(0) | int }}W"
             },
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_phase_c_power",
+            "displayEntityId": "sensor.p1_meter_vermogen_fase_3",
             "stateTemplate": "auto"
           }
         },
@@ -652,7 +652,7 @@
           "w": 130,
           "h": 130,
           "min": 0,
-          "max": 3000,
+          "max": 2000,
           "val": 0,
           "start_angle": 135,
           "end_angle": 45,
@@ -662,12 +662,12 @@
           "line_color10": "#2196F3",
           "page": 2,
           "haBinding": {
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
-            "stateTemplate": "auto",
             "propertyTemplates": {
-              "val": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float(0) | abs }}",
-              "line_color10": "{{ 'red' if states('sensor.marstek_venuse_3_0_ct_total_power') | float(0) >= 0 else 'blue' }}"
-            }
+              "val": "{{ states(\"sensor.p1_meter_vermogen\") | float(0) | abs }}",
+              "line_color10": "{{ 'red' if states('sensor.p1_meter_vermogen') | float(0) >= 0 else 'blue' }}"
+            },
+            "displayEntityId": "sensor.p1_meter_vermogen",
+            "stateTemplate": "auto"
           },
           "mode": "normal"
         },
@@ -700,9 +700,9 @@
           "text_font": 30,
           "haBinding": {
             "propertyTemplates": {
-              "text": "{{ states(\"sensor.marstek_venuse_3_0_ct_total_power\") | float(0) | round(0) | int }}W"
+              "text": "{{ states(\"sensor.p1_meter_vermogen\") | float(0) | round(0) | int }}W"
             },
-            "displayEntityId": "sensor.marstek_venuse_3_0_ct_total_power",
+            "displayEntityId": "sensor.p1_meter_vermogen",
             "stateTemplate": "auto"
           }
         }
@@ -965,7 +965,7 @@
           "text_font": 24,
           "page": 1,
           "haBinding": {
-            "displayEntityId": "sensor.net_export_energy_daily",
+            "displayEntityId": "sensor.p1_meter_p1_energie_export_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
               "text": "{% set s = states(\"sensor.net_export_energy_daily\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}kWh"
@@ -1138,7 +1138,7 @@
           "text_font": 24,
           "page": 4,
           "haBinding": {
-            "displayEntityId": "sensor.net_import_energy_daily",
+            "displayEntityId": "sensor.p1_meter_p1_energie_import_daily",
             "stateTemplate": "auto",
             "propertyTemplates": {
               "text": "{% set s = states(\"sensor.net_import_energy_daily\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}kWh"
@@ -1237,7 +1237,14 @@
           "text": "10m3",
           "text_font": 20,
           "page": 4,
-          "parentid": 18
+          "parentid": 18,
+          "haBinding": {
+            "displayEntityId": "sensor.gas_meter_p1_gas_meter_daily",
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.gas_meter_p1_gas_meter_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}m3"
+            }
+          }
         }
       ],
       "comment": " Page 4 "

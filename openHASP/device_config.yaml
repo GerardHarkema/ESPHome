@@ -47,7 +47,7 @@ objects:
 
   - obj: "p1b49"  # gauge
     properties:
-      "val": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) }}'
+      "val": '{{ states("sensor.p1_meter_vermogen") | float(0) }}'
 
   - obj: "p1b52"  # label
     properties:
@@ -56,8 +56,8 @@ objects:
 
   - obj: "p1b53"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) | round(0) | int }}W'
-      "text_color": '{{ ''red'' if states(''sensor.marstek_venuse_3_0_ct_total_power'') | float(0) < 0 else ''blue'' }}'
+      "text": '{{ states("sensor.p1_meter_vermogen") | float(0) | round(0) | int }}W'
+      "text_color": '{{ ''red'' if states(''sensor.p1_meter_vermogen'') | float(0) < 0 else ''blue'' }}'
 
   - obj: "p1b54"  # arc
     properties:
@@ -69,39 +69,39 @@ objects:
   #####################################
   - obj: "p2b1"  # arc
     properties:
-      "val": '{{ states("sensor.marstek_venuse_3_0_ct_phase_a_power") | float(0) | abs }}'
-      "line_color10": '{{ ''red'' if states(''sensor.marstek_venuse_3_0_ct_phase_a_power'') | float(0) >= 0 else ''blue'' }}'
+      "val": '{{ states("sensor.p1_meter_vermogen_fase_1") | float(0) | abs }}'
+      "line_color10": '{{ ''red'' if states(''sensor.p1_meter_vermogen_fase_1'') | float(0) >= 0 else ''blue'' }}'
 
   - obj: "p2b3"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_a_power") | float(0) | round(0) | int }}W'
+      "text": '{{ states("sensor.p1_meter_vermogen_fase_1") | float(0) | round(0) | int }}W'
 
   - obj: "p2b4"  # arc
     properties:
-      "val": '{{ states("sensor.marstek_venuse_3_0_ct_phase_b_power") | float(0) | abs }}'
-      "line_color10": '{{ ''red'' if states(''sensor.marstek_venuse_3_0_ct_phase_b_power'') | float(0) >= 0 else ''blue'' }}'
+      "val": '{{ states("sensor.p1_meter_vermogen_fase_2") | float(0) | abs }}'
+      "line_color10": '{{ ''red'' if states(''sensor.p1_meter_vermogen_fase_2'') | float(0) >= 0 else ''blue'' }}'
 
   - obj: "p2b6"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_b_power") | float(0) | round(0) | int }}W'
+      "text": '{{ states("sensor.p1_meter_vermogen_fase_2") | float(0) | round(0) | int }}W'
 
   - obj: "p2b7"  # arc
     properties:
-      "val": '{{ states("sensor.marstek_venuse_3_0_ct_phase_c_power") | float(0) | abs }}'
-      "line_color10": '{{ ''red'' if states(''sensor.marstek_venuse_3_0_ct_phase_c_power'') | float(0) >= 0 else ''blue'' }}'
+      "val": '{{ states("sensor.p1_meter_vermogen_fase_3") | float(0) | abs }}'
+      "line_color10": '{{ ''red'' if states(''sensor.p1_meter_vermogen_fase_3'') | float(0) >= 0 else ''blue'' }}'
 
   - obj: "p2b9"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_phase_c_power") | float(0) | round(0) | int }}W'
+      "text": '{{ states("sensor.p1_meter_vermogen_fase_3") | float(0) | round(0) | int }}W'
 
   - obj: "p2b10"  # arc
     properties:
-      "val": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) | abs }}'
-      "line_color10": '{{ ''red'' if states(''sensor.marstek_venuse_3_0_ct_total_power'') | float(0) >= 0 else ''blue'' }}'
+      "val": '{{ states("sensor.p1_meter_vermogen") | float(0) | abs }}'
+      "line_color10": '{{ ''red'' if states(''sensor.p1_meter_vermogen'') | float(0) >= 0 else ''blue'' }}'
 
   - obj: "p2b12"  # label
     properties:
-      "text": '{{ states("sensor.marstek_venuse_3_0_ct_total_power") | float(0) | round(0) | int }}W'
+      "text": '{{ states("sensor.p1_meter_vermogen") | float(0) | round(0) | int }}W'
 
   #####################################
   # Page 3 — Page 3
@@ -166,4 +166,8 @@ objects:
   - obj: "p4b17"  # label
     properties:
       "text": '{% set s = states("sensor.meterkast_muino_water_meter_e5b230_water_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}l'
+
+  - obj: "p4b19"  # label
+    properties:
+      "text": '{% set s = states("sensor.gas_meter_p1_gas_meter_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}m3'
 

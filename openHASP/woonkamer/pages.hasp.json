@@ -877,7 +877,7 @@
           "value_color": "white",
           "value_font": 36,
           "value_ofs_y": -15,
-          "page": 1,
+          "page": 4,
           "start_angle": 0,
           "end_angle": 360
         },
@@ -894,7 +894,7 @@
           "border_width": 0,
           "text": "20,6 kWh",
           "text_font": 24,
-          "page": 1,
+          "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.meterkast_inverter_solar_enery_daily",
             "stateTemplate": "auto",
@@ -926,7 +926,7 @@
           "value_color": "white",
           "value_font": 38,
           "value_ofs_y": -35,
-          "page": 1,
+          "page": 4,
           "start_angle": 0,
           "end_angle": 360
         },
@@ -943,7 +943,7 @@
           "border_width": 0,
           "text": "10,5 kWh",
           "text_font": 24,
-          "page": 1,
+          "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.net_import_energy_daily",
             "stateTemplate": "auto"
@@ -963,7 +963,7 @@
           "border_width": 0,
           "text": "17,7 kWh",
           "text_font": 24,
-          "page": 1,
+          "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.p1_meter_p1_energie_export_daily",
             "stateTemplate": "auto",
@@ -996,7 +996,7 @@
           "value_color": "white",
           "value_font": 50,
           "value_ofs_y": -15,
-          "page": 1,
+          "page": 4,
           "start_angle": 0,
           "end_angle": 360
         },
@@ -1013,7 +1013,7 @@
           "border_width": 0,
           "text": "33,4 kWh",
           "text_font": 24,
-          "page": 1,
+          "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.home_energy",
             "stateTemplate": "auto",
@@ -1045,7 +1045,7 @@
           "value_color": "white",
           "value_font": 38,
           "value_ofs_y": -35,
-          "page": 1,
+          "page": 4,
           "start_angle": 0,
           "end_angle": 360
         },
@@ -1062,7 +1062,7 @@
           "border_width": 0,
           "text": "20,5 kWh",
           "text_font": 24,
-          "page": 1,
+          "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.marstek_grid_energy_import_daily",
             "stateTemplate": "auto",
@@ -1085,7 +1085,7 @@
           "border_width": 0,
           "text": "27,7 kWh",
           "text_font": 24,
-          "page": 1,
+          "page": 4,
           "haBinding": {
             "displayEntityId": "sensor.marstek_grid_energy_export_daily",
             "stateTemplate": "auto",
@@ -1105,7 +1105,7 @@
           "text": "",
           "align": "center",
           "text_color": "#ffffff",
-          "page": 1,
+          "page": 4,
           "parentid": 49,
           "text_font": 20
         },
@@ -1119,7 +1119,7 @@
           "text": "",
           "align": "center",
           "text_color": "#ffffff",
-          "page": 1,
+          "page": 4,
           "parentid": 44,
           "text_font": 20
         },
@@ -1248,6 +1248,633 @@
         }
       ],
       "comment": " Page 4 "
+    },
+    {
+      "id": 5,
+      "widgets": [
+        {
+          "id": 1,
+          "obj": "arc",
+          "x": 60,
+          "y": 200,
+          "w": 120,
+          "h": 120,
+          "min": 0,
+          "max": 0,
+          "val": 0,
+          "adjustable": 0,
+          "line_color": "lime",
+          "line_color10": "orange",
+          "line_width": 3,
+          "line_width10": 3,
+          "bg_opa": 180,
+          "border_width": 0,
+          "start_angle10": 270,
+          "end_angle10": 269,
+          "value_str": "充",
+          "value_color": "white",
+          "value_font": 50,
+          "value_ofs_y": -15,
+          "page": 5,
+          "start_angle": 0,
+          "end_angle": 360
+        },
+        {
+          "id": 2,
+          "obj": "label",
+          "x": 0,
+          "y": 70,
+          "w": 120,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "orange",
+          "border_width": 0,
+          "text": "20,6 W",
+          "text_font": 24,
+          "page": 5,
+          "haBinding": {
+            "displayEntityId": "sensor.omnik_solar_current_power",
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensorsensor.omnik_solar_current_power\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}W"
+            }
+          },
+          "parentid": 1
+        },
+        {
+          "id": 3,
+          "obj": "arc",
+          "x": 60,
+          "y": 40,
+          "w": 120,
+          "h": 120,
+          "max": 0,
+          "val": 0,
+          "adjustable": 0,
+          "line_color": "#c2008e",
+          "line_color10": "magenta",
+          "line_width": 3,
+          "line_width10": 3,
+          "bg_opa": 180,
+          "border_width": 0,
+          "start_angle10": 270,
+          "end_angle10": 269,
+          "value_str": "",
+          "value_color": "white",
+          "value_font": 50,
+          "value_ofs_y": -15,
+          "page": 5,
+          "start_angle": 0,
+          "end_angle": 360
+        },
+        {
+          "id": 4,
+          "obj": "label",
+          "x": 60,
+          "y": 160,
+          "w": 100,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "magenta",
+          "border_width": 0,
+          "text": "10,5 kWh",
+          "text_font": 24,
+          "page": 5,
+          "haBinding": {
+            "displayEntityId": "sensor.net_import_energy_daily",
+            "stateTemplate": "auto"
+          },
+          "parentid": 3
+        },
+        {
+          "id": 5,
+          "obj": "label",
+          "x": 0,
+          "y": 70,
+          "w": 120,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "#00c0c0",
+          "border_width": 0,
+          "text": "17,7 W",
+          "text_font": 24,
+          "page": 5,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.p1_meter_vermogen\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}W"
+            },
+            "displayEntityId": "sensor.p1_meter_vermogen",
+            "stateTemplate": "auto"
+          },
+          "parentid": 3
+        },
+        {
+          "id": 6,
+          "obj": "arc",
+          "x": 180,
+          "y": 110,
+          "w": 140,
+          "h": 140,
+          "min": 0,
+          "max": 0,
+          "val": 0,
+          "adjustable": 0,
+          "line_color": "#b5c200",
+          "line_color10": "orange",
+          "line_width": 3,
+          "line_width10": 3,
+          "bg_opa": 180,
+          "border_width": 0,
+          "start_angle10": 270,
+          "end_angle10": 269,
+          "value_str": "",
+          "value_color": "white",
+          "value_font": 50,
+          "value_ofs_y": -15,
+          "page": 5,
+          "start_angle": 0,
+          "end_angle": 360
+        },
+        {
+          "id": 7,
+          "obj": "label",
+          "x": 0,
+          "y": 90,
+          "w": 140,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "white",
+          "border_width": 0,
+          "text": "33,4 W",
+          "text_font": 24,
+          "page": 5,
+          "haBinding": {
+            "displayEntityId": "sensor.home_energy",
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.home_power_consumption\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}W"
+            }
+          },
+          "parentid": 6
+        },
+        {
+          "id": 8,
+          "obj": "arc",
+          "x": 320,
+          "y": 40,
+          "w": 120,
+          "h": 120,
+          "max": 0,
+          "val": 0,
+          "adjustable": 0,
+          "line_color": "#00bfc2",
+          "line_color10": "magenta",
+          "line_width": 3,
+          "line_width10": 3,
+          "bg_opa": 180,
+          "border_width": 0,
+          "start_angle10": 270,
+          "end_angle10": 269,
+          "value_str": "",
+          "value_color": "white",
+          "value_font": 50,
+          "value_ofs_y": -15,
+          "page": 5,
+          "start_angle": 0,
+          "end_angle": 360
+        },
+        {
+          "id": 10,
+          "obj": "label",
+          "x": 0,
+          "y": 70,
+          "w": 120,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "#00c0c0",
+          "border_width": 0,
+          "text": "27,7 W",
+          "text_font": 24,
+          "page": 5,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.marstek_venuse_3_0_grid_power\") %}{{ (s | float(0) | round(1)) if s not in ['unavailable','unknown'] else '--' }}W"
+            },
+            "displayEntityId": "sensor.marstek_venuse_3_0_grid_power",
+            "stateTemplate": "auto"
+          },
+          "parentid": 8
+        },
+        {
+          "id": 11,
+          "obj": "label",
+          "x": 0,
+          "y": 90,
+          "w": 150,
+          "h": 30,
+          "text": "",
+          "align": "center",
+          "text_color": "#ffffff",
+          "page": 5,
+          "parentid": 49,
+          "text_font": 20
+        },
+        {
+          "id": 12,
+          "obj": "label",
+          "x": 0,
+          "y": 90,
+          "w": 150,
+          "h": 30,
+          "text": "",
+          "align": "center",
+          "text_color": "#ffffff",
+          "page": 5,
+          "parentid": 44,
+          "text_font": 20
+        },
+        {
+          "id": 17,
+          "obj": "label",
+          "x": 0,
+          "y": 50,
+          "w": 90,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "orange",
+          "border_width": 0,
+          "text": "10l",
+          "text_font": 20,
+          "page": 5,
+          "parentid": 16,
+          "haBinding": {
+            "displayEntityId": "sensor.meterkast_muino_water_meter_e5b230_water_daily",
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.meterkast_muino_water_meter_e5b230_water_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}l"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "obj": "label",
+          "x": 0,
+          "y": 50,
+          "w": 90,
+          "h": 30,
+          "bg_opa": 0,
+          "align": "center",
+          "text_color": "orange",
+          "border_width": 0,
+          "text": "10m3",
+          "text_font": 20,
+          "page": 5,
+          "parentid": 18,
+          "haBinding": {
+            "displayEntityId": "sensor.gas_meter_p1_gas_meter_daily",
+            "stateTemplate": "auto",
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.gas_meter_p1_gas_meter_daily\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}m3"
+            }
+          }
+        }
+      ],
+      "comment": " Page 5 "
+    },
+    {
+      "id": 6,
+      "widgets": [
+        {
+          "id": 10,
+          "obj": "label",
+          "x": 10,
+          "y": 40,
+          "w": 110,
+          "h": 110,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 100,
+          "text": "",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set cond = states('weather.knmi_thuis') %}{% set icons = {'clear-night': '', 'cloudy': '', 'exceptional': '', 'fog': '', 'hail': '', 'lightning': '', 'lightning-rainy': '', 'partlycloudy': '', 'pouring': '', 'rainy': '', 'snowy': '', 'snowy-rainy': '', 'sunny': '', 'windy': '', 'windy-variant': ''} %}{{ icons.get(cond, icons['cloudy']) }}"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "obj": "label",
+          "x": 130,
+          "y": 45,
+          "w": 150,
+          "h": 60,
+          "text_color": "#ffffff",
+          "text_font": 40,
+          "text": "--°",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set t = states('sensor.knmi_temperatuur') %}{{ (t ~ '°') if t not in ['unavailable','unknown',none] else '--°' }}"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "obj": "label",
+          "x": 130,
+          "y": 108,
+          "w": 220,
+          "h": 20,
+          "text_color": "#ffffff",
+          "text_font": 18,
+          "text": "--",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set d = states('sensor.knmi_omschrijving') %}{{ d if d not in ['unavailable','unknown',none] else '--' }}"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "obj": "label",
+          "x": 130,
+          "y": 130,
+          "w": 220,
+          "h": 20,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Gevoel: --°",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set g = states('sensor.knmi_gevoelstemperatuur') %}Gevoel: {{ g if g not in ['unavailable','unknown',none] else '--' }}°"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "obj": "label",
+          "x": 350,
+          "y": 42,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Vocht: --%",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set h = states('sensor.knmi_luchtvochtigheid') %}Vocht: {{ h if h not in ['unavailable','unknown',none] else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "obj": "label",
+          "x": 350,
+          "y": 68,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Wind: --",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set ws = states('sensor.knmi_windsnelheid') %}{% set wb = state_attr('sensor.knmi_windsnelheid', 'bearing') %}Wind: {{ ws if ws not in ['unavailable','unknown',none] else '--' }} km/h {{ wb if wb is not none else '' }}"
+            }
+          }
+        },
+        {
+          "id": 15,
+          "obj": "label",
+          "x": 350,
+          "y": 94,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Druk: --",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set p = states('sensor.knmi_luchtdruk') %}Druk: {{ p if p not in ['unavailable','unknown',none] else '--' }} hPa"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "obj": "label",
+          "x": 350,
+          "y": 120,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Zicht: --",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set v = state_attr('weather.knmi_thuis', 'visibility') %}Zicht: {{ v if v is not none else '--' }} km"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "obj": "obj",
+          "x": 10,
+          "y": 160,
+          "w": 460,
+          "h": 2,
+          "bg_color": "#555555",
+          "bg_opa": 255,
+          "border_side": 0,
+          "radius": 0,
+          "page": 6
+        },
+        {
+          "id": 17,
+          "obj": "label",
+          "x": 10,
+          "y": 168,
+          "w": 460,
+          "h": 20,
+          "mode": "scroll",
+          "text_color": "#aaaaaa",
+          "text_font": 14,
+          "text": "Verwachting",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% if is_state('binary_sensor.knmi_waarschuwing', 'on') %}⚠ {{ state_attr('binary_sensor.knmi_waarschuwing', 'title') }}{% else %}Verwachting{% endif %}",
+              "text_color": "{{ '#ff5555' if is_state('binary_sensor.knmi_waarschuwing', 'on') else '#aaaaaa' }}"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "obj": "label",
+          "x": 60,
+          "y": 195,
+          "w": 100,
+          "h": 20,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 14,
+          "text": "Vandaag",
+          "page": 6
+        },
+        {
+          "id": 24,
+          "obj": "label",
+          "x": 60,
+          "y": 215,
+          "w": 100,
+          "h": 55,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 100,
+          "text": "",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set cond = states('weather.knmi_thuis') %}{% set icons = {'clear-night': '', 'cloudy': '', 'exceptional': '', 'fog': '', 'hail': '', 'lightning': '', 'lightning-rainy': '', 'partlycloudy': '', 'pouring': '', 'rainy': '', 'snowy': '', 'snowy-rainy': '', 'sunny': '', 'windy': '', 'windy-variant': ''} %}{{ icons.get(cond, icons['cloudy']) }}"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "obj": "label",
+          "x": 60,
+          "y": 272,
+          "w": 100,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 16,
+          "text": "--° / --°",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set mx = states('sensor.knmi_max_temperatuur_vandaag') %}{% set mn = states('sensor.knmi_min_temperatuur_vandaag') %}{{ mx if mx not in ['unavailable','unknown',none] else '--' }}° / {{ mn if mn not in ['unavailable','unknown',none] else '--' }}°"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "obj": "label",
+          "x": 60,
+          "y": 294,
+          "w": 100,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Neerslag: --%",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set n = states('sensor.knmi_neerslag_vandaag') %}Neerslag: {{ n if n not in ['unavailable','unknown',none] else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "obj": "label",
+          "x": 160,
+          "y": 195,
+          "w": 100,
+          "h": 20,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 14,
+          "text": "Morgen",
+          "page": 6
+        },
+        {
+          "id": 25,
+          "obj": "label",
+          "x": 160,
+          "y": 215,
+          "w": 100,
+          "h": 55,
+          "align": "center",
+          "text_color": "#ffd166",
+          "text_font": 18,
+          "text": "--",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set s = state_attr('binary_sensor.knmi_zon', 'sun_chance1') %}Zon: {{ s if s is not none else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 29,
+          "obj": "label",
+          "x": 160,
+          "y": 272,
+          "w": 100,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 16,
+          "text": "--° / --°",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set mx = states('sensor.knmi_max_temperatuur_morgen') %}{% set mn = states('sensor.knmi_min_temperatuur_morgen') %}{{ mx if mx not in ['unavailable','unknown',none] else '--' }}° / {{ mn if mn not in ['unavailable','unknown',none] else '--' }}°"
+            }
+          }
+        },
+        {
+          "id": 33,
+          "obj": "label",
+          "x": 160,
+          "y": 294,
+          "w": 100,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Neerslag: --%",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set n = states('sensor.knmi_neerslag_morgen') %}Neerslag: {{ n if n not in ['unavailable','unknown',none] else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 34,
+          "obj": "label",
+          "x": 260,
+          "y": 195,
+          "w": 160,
+          "h": 119,
+          "mode": "break",
+          "align": "left",
+          "text_color": "#cccccc",
+          "text_font": 12,
+          "text": "--",
+          "page": 6,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set w = states('sensor.knmi_weersverwachting') %}{{ w if w not in ['unavailable','unknown',none] else '--' }}"
+            }
+          },
+          "color_recolor": false
+        }
+      ],
+      "comment": " Page 6 "
     }
   ]
 }

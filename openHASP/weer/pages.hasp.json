@@ -1,0 +1,401 @@
+{
+  "deviceProperties": {
+    "width": 480,
+    "height": 320,
+    "deviceName": "device"
+  },
+  "layout": [
+    {
+      "id": 0,
+      "widgets": [
+        {
+          "id": 1,
+          "obj": "obj",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 34,
+          "bg_color": "#1f1f1f",
+          "bg_opa": 255,
+          "border_side": 0,
+          "radius": 0,
+          "page": 0
+        },
+        {
+          "id": 2,
+          "obj": "label",
+          "x": 10,
+          "y": 4,
+          "w": 100,
+          "h": 25,
+          "text": "--:--",
+          "text_color": "#ffffff",
+          "page": 0,
+          "haBinding": {
+            "displayEntityId": "sensor.time",
+            "stateTemplate": "auto"
+          }
+        },
+        {
+          "id": 3,
+          "obj": "label",
+          "x": 360,
+          "y": 4,
+          "w": 110,
+          "h": 25,
+          "text": "--°C",
+          "text_align": "right",
+          "text_color": "#ffffff",
+          "page": 0,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set s = states(\"sensor.lyric_thermostaat_thermostat_binnentemperatuur\") %}{{ s if s not in ['unavailable','unknown'] else '--' }}°"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "widgets": [
+        {
+          "id": 9,
+          "obj": "obj",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 320,
+          "bg_color": "#000000",
+          "bg_opa": 255,
+          "border_side": 0,
+          "radius": 0,
+          "page": 1
+        },
+        {
+          "id": 10,
+          "obj": "label",
+          "x": 10,
+          "y": 40,
+          "w": 110,
+          "h": 110,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 100,
+          "text": "",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set cond = states('weather.knmi_thuis') %}{% set icons = {'clear-night': '', 'cloudy': '', 'exceptional': '', 'fog': '', 'hail': '', 'lightning': '', 'lightning-rainy': '', 'partlycloudy': '', 'pouring': '', 'rainy': '', 'snowy': '', 'snowy-rainy': '', 'sunny': '', 'windy': '', 'windy-variant': ''} %}{{ icons.get(cond, icons['cloudy']) }}"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "obj": "label",
+          "x": 130,
+          "y": 45,
+          "w": 150,
+          "h": 60,
+          "text_color": "#ffffff",
+          "text_font": 40,
+          "text": "--°",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set t = states('sensor.knmi_temperatuur') %}{{ (t ~ '°') if t not in ['unavailable','unknown',none] else '--°' }}"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "obj": "label",
+          "x": 130,
+          "y": 108,
+          "w": 220,
+          "h": 20,
+          "text_color": "#ffffff",
+          "text_font": 18,
+          "text": "--",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set d = states('sensor.knmi_omschrijving') %}{{ d if d not in ['unavailable','unknown',none] else '--' }}"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "obj": "label",
+          "x": 130,
+          "y": 130,
+          "w": 220,
+          "h": 20,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Gevoel: --°",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set g = states('sensor.knmi_gevoelstemperatuur') %}Gevoel: {{ g if g not in ['unavailable','unknown',none] else '--' }}°"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "obj": "label",
+          "x": 350,
+          "y": 42,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Vocht: --%",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set h = states('sensor.knmi_luchtvochtigheid') %}Vocht: {{ h if h not in ['unavailable','unknown',none] else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "obj": "label",
+          "x": 350,
+          "y": 68,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Wind: --",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set ws = states('sensor.knmi_windsnelheid') %}{% set wb = state_attr('sensor.knmi_windsnelheid', 'bearing') %}Wind: {{ ws if ws not in ['unavailable','unknown',none] else '--' }} km/h {{ wb if wb is not none else '' }}"
+            }
+          }
+        },
+        {
+          "id": 15,
+          "obj": "label",
+          "x": 350,
+          "y": 94,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Druk: --",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set p = states('sensor.knmi_luchtdruk') %}Druk: {{ p if p not in ['unavailable','unknown',none] else '--' }} hPa"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "obj": "label",
+          "x": 350,
+          "y": 120,
+          "w": 120,
+          "h": 24,
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Zicht: --",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set v = state_attr('weather.knmi_thuis', 'visibility') %}Zicht: {{ v if v is not none else '--' }} km"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "obj": "obj",
+          "x": 10,
+          "y": 160,
+          "w": 460,
+          "h": 2,
+          "bg_color": "#555555",
+          "bg_opa": 255,
+          "border_side": 0,
+          "radius": 0,
+          "page": 1
+        },
+        {
+          "id": 17,
+          "obj": "label",
+          "x": 10,
+          "y": 168,
+          "w": 460,
+          "h": 20,
+          "mode": "scroll",
+          "text_color": "#aaaaaa",
+          "text_font": 14,
+          "text": "Verwachting",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% if is_state('binary_sensor.knmi_waarschuwing', 'on') %}⚠ {{ state_attr('binary_sensor.knmi_waarschuwing', 'title') }}{% else %}Verwachting{% endif %}",
+              "text_color": "{{ '#ff5555' if is_state('binary_sensor.knmi_waarschuwing', 'on') else '#aaaaaa' }}"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "obj": "label",
+          "x": 0,
+          "y": 195,
+          "w": 120,
+          "h": 20,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 14,
+          "text": "Vandaag",
+          "page": 1
+        },
+        {
+          "id": 24,
+          "obj": "label",
+          "x": 0,
+          "y": 215,
+          "w": 120,
+          "h": 55,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 100,
+          "text": "",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set cond = states('weather.knmi_thuis') %}{% set icons = {'clear-night': '', 'cloudy': '', 'exceptional': '', 'fog': '', 'hail': '', 'lightning': '', 'lightning-rainy': '', 'partlycloudy': '', 'pouring': '', 'rainy': '', 'snowy': '', 'snowy-rainy': '', 'sunny': '', 'windy': '', 'windy-variant': ''} %}{{ icons.get(cond, icons['cloudy']) }}"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "obj": "label",
+          "x": 0,
+          "y": 272,
+          "w": 120,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 16,
+          "text": "--° / --°",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set mx = states('sensor.knmi_max_temperatuur_vandaag') %}{% set mn = states('sensor.knmi_min_temperatuur_vandaag') %}{{ mx if mx not in ['unavailable','unknown',none] else '--' }}° / {{ mn if mn not in ['unavailable','unknown',none] else '--' }}°"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "obj": "label",
+          "x": 0,
+          "y": 294,
+          "w": 120,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Neerslag: --%",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set n = states('sensor.knmi_neerslag_vandaag') %}Neerslag: {{ n if n not in ['unavailable','unknown',none] else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "obj": "label",
+          "x": 120,
+          "y": 195,
+          "w": 120,
+          "h": 20,
+          "align": "center",
+          "text_color": "#ffffff",
+          "text_font": 14,
+          "text": "Morgen",
+          "page": 1
+        },
+        {
+          "id": 25,
+          "obj": "label",
+          "x": 120,
+          "y": 215,
+          "w": 120,
+          "h": 55,
+          "align": "center",
+          "text_color": "#ffd166",
+          "text_font": 18,
+          "text": "--",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set s = state_attr('binary_sensor.knmi_zon', 'sun_chance1') %}Zon: {{ s if s is not none else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 29,
+          "obj": "label",
+          "x": 120,
+          "y": 272,
+          "w": 120,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 16,
+          "text": "--° / --°",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set mx = states('sensor.knmi_max_temperatuur_morgen') %}{% set mn = states('sensor.knmi_min_temperatuur_morgen') %}{{ mx if mx not in ['unavailable','unknown',none] else '--' }}° / {{ mn if mn not in ['unavailable','unknown',none] else '--' }}°"
+            }
+          }
+        },
+        {
+          "id": 33,
+          "obj": "label",
+          "x": 120,
+          "y": 294,
+          "w": 120,
+          "h": 20,
+          "align": "center",
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "Neerslag: --%",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set n = states('sensor.knmi_neerslag_morgen') %}Neerslag: {{ n if n not in ['unavailable','unknown',none] else '--' }}%"
+            }
+          }
+        },
+        {
+          "id": 34,
+          "obj": "label",
+          "x": 240,
+          "y": 195,
+          "w": 230,
+          "h": 119,
+          "mode": "break",
+          "align": "left",
+          "text_color": "#cccccc",
+          "text_font": 14,
+          "text": "--",
+          "page": 1,
+          "haBinding": {
+            "propertyTemplates": {
+              "text": "{% set w = states('sensor.knmi_weersverwachting') %}{{ w if w not in ['unavailable','unknown',none] else '--' }}"
+            }
+          },
+          "color_recolor": false
+        }
+      ],
+      "comment": "Weer (KNMI)"
+    }
+  ]
+}

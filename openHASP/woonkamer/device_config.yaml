@@ -171,3 +171,102 @@ objects:
     properties:
       "text": '{% set s = states("sensor.gas_meter_p1_gas_meter_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}m3'
 
+  #####################################
+  # Page 5 —  Page 5 
+  #####################################
+  - obj: "p5b2"  # label
+    properties:
+      "text": '{% set s = states("sensorsensor.omnik_solar_current_power") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}W'
+
+  - obj: "p5b4"  # label
+    properties:
+      "text": '{{ states("sensor.net_import_energy_daily") }}'
+
+  - obj: "p5b5"  # label
+    properties:
+      "text": '{% set s = states("sensor.p1_meter_vermogen") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}W'
+
+  - obj: "p5b7"  # label
+    properties:
+      "text": '{% set s = states("sensor.home_power_consumption") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}W'
+
+  - obj: "p5b10"  # label
+    properties:
+      "text": '{% set s = states("sensor.marstek_venuse_3_0_grid_power") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}W'
+
+  - obj: "p5b17"  # label
+    properties:
+      "text": '{% set s = states("sensor.meterkast_muino_water_meter_e5b230_water_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}l'
+
+  - obj: "p5b19"  # label
+    properties:
+      "text": '{% set s = states("sensor.gas_meter_p1_gas_meter_daily") %}{{ s if s not in [''unavailable'',''unknown''] else ''--'' }}m3'
+
+  #####################################
+  # Page 6 —  Page 6 
+  #####################################
+  - obj: "p6b10"  # label
+    properties:
+      "text": '{% set cond = states(''weather.knmi_thuis'') %}{% set icons = {''clear-night'': '''', ''cloudy'': '''', ''exceptional'': '''', ''fog'': '''', ''hail'': '''', ''lightning'': '''', ''lightning-rainy'': '''', ''partlycloudy'': '''', ''pouring'': '''', ''rainy'': '''', ''snowy'': '''', ''snowy-rainy'': '''', ''sunny'': '''', ''windy'': '''', ''windy-variant'': ''''} %}{{ icons.get(cond, icons[''cloudy'']) }}'
+
+  - obj: "p6b11"  # label
+    properties:
+      "text": '{% set t = states(''sensor.knmi_temperatuur'') %}{{ (t ~ ''°'') if t not in [''unavailable'',''unknown'',none] else ''--°'' }}'
+
+  - obj: "p6b12"  # label
+    properties:
+      "text": '{% set d = states(''sensor.knmi_omschrijving'') %}{{ d if d not in [''unavailable'',''unknown'',none] else ''--'' }}'
+
+  - obj: "p6b19"  # label
+    properties:
+      "text": '{% set g = states(''sensor.knmi_gevoelstemperatuur'') %}Gevoel: {{ g if g not in [''unavailable'',''unknown'',none] else ''--'' }}°'
+
+  - obj: "p6b13"  # label
+    properties:
+      "text": '{% set h = states(''sensor.knmi_luchtvochtigheid'') %}Vocht: {{ h if h not in [''unavailable'',''unknown'',none] else ''--'' }}%'
+
+  - obj: "p6b14"  # label
+    properties:
+      "text": '{% set ws = states(''sensor.knmi_windsnelheid'') %}{% set wb = state_attr(''sensor.knmi_windsnelheid'', ''bearing'') %}Wind: {{ ws if ws not in [''unavailable'',''unknown'',none] else ''--'' }} km/h {{ wb if wb is not none else '''' }}'
+
+  - obj: "p6b15"  # label
+    properties:
+      "text": '{% set p = states(''sensor.knmi_luchtdruk'') %}Druk: {{ p if p not in [''unavailable'',''unknown'',none] else ''--'' }} hPa'
+
+  - obj: "p6b18"  # label
+    properties:
+      "text": '{% set v = state_attr(''weather.knmi_thuis'', ''visibility'') %}Zicht: {{ v if v is not none else ''--'' }} km'
+
+  - obj: "p6b17"  # label
+    properties:
+      "text": '{% if is_state(''binary_sensor.knmi_waarschuwing'', ''on'') %}⚠ {{ state_attr(''binary_sensor.knmi_waarschuwing'', ''title'') }}{% else %}Verwachting{% endif %}'
+      "text_color": '{{ ''#ff5555'' if is_state(''binary_sensor.knmi_waarschuwing'', ''on'') else ''#aaaaaa'' }}'
+
+  - obj: "p6b24"  # label
+    properties:
+      "text": '{% set cond = states(''weather.knmi_thuis'') %}{% set icons = {''clear-night'': '''', ''cloudy'': '''', ''exceptional'': '''', ''fog'': '''', ''hail'': '''', ''lightning'': '''', ''lightning-rainy'': '''', ''partlycloudy'': '''', ''pouring'': '''', ''rainy'': '''', ''snowy'': '''', ''snowy-rainy'': '''', ''sunny'': '''', ''windy'': '''', ''windy-variant'': ''''} %}{{ icons.get(cond, icons[''cloudy'']) }}'
+
+  - obj: "p6b28"  # label
+    properties:
+      "text": '{% set mx = states(''sensor.knmi_max_temperatuur_vandaag'') %}{% set mn = states(''sensor.knmi_min_temperatuur_vandaag'') %}{{ mx if mx not in [''unavailable'',''unknown'',none] else ''--'' }}° / {{ mn if mn not in [''unavailable'',''unknown'',none] else ''--'' }}°'
+
+  - obj: "p6b32"  # label
+    properties:
+      "text": '{% set n = states(''sensor.knmi_neerslag_vandaag'') %}Neerslag: {{ n if n not in [''unavailable'',''unknown'',none] else ''--'' }}%'
+
+  - obj: "p6b25"  # label
+    properties:
+      "text": '{% set s = state_attr(''binary_sensor.knmi_zon'', ''sun_chance1'') %}Zon: {{ s if s is not none else ''--'' }}%'
+
+  - obj: "p6b29"  # label
+    properties:
+      "text": '{% set mx = states(''sensor.knmi_max_temperatuur_morgen'') %}{% set mn = states(''sensor.knmi_min_temperatuur_morgen'') %}{{ mx if mx not in [''unavailable'',''unknown'',none] else ''--'' }}° / {{ mn if mn not in [''unavailable'',''unknown'',none] else ''--'' }}°'
+
+  - obj: "p6b33"  # label
+    properties:
+      "text": '{% set n = states(''sensor.knmi_neerslag_morgen'') %}Neerslag: {{ n if n not in [''unavailable'',''unknown'',none] else ''--'' }}%'
+
+  - obj: "p6b34"  # label
+    properties:
+      "text": '{% set w = states(''sensor.knmi_weersverwachting'') %}{{ w if w not in [''unavailable'',''unknown'',none] else ''--'' }}'
+

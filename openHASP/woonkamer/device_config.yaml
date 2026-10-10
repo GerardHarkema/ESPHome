@@ -176,7 +176,7 @@ objects:
   #####################################
   - obj: "p5b2"  # label
     properties:
-      "text": '{% set s = states("sensorsensor.omnik_solar_current_power") %}{{ (s | float(0) | round(1)) if s not in [''unavailable'',''unknown''] else ''--'' }}W'
+      "text": '{{ states("sensor.omnik_solar_current_power") | float(0) | round(0) | int }}W'
 
   - obj: "p5b4"  # label
     properties:
